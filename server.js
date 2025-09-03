@@ -4,14 +4,22 @@ const cors = require('cors');
 const { sequelize } = require('./database/database_supabase_2'); // your working pooler URL
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
+const HOST = '0.0.0.0'; 
 
 // CORS & JSON
 app.use(cors({ origin: ['http://localhost:4200', /* add your deployed FE here */], credentials: true }));
 app.use(express.json());
 
 // Health check so Render can verify readiness
-app.get('/healthz', (_req, res) => res.status(200).send('ok'));
+app.get('/health', async (_req, res) => {
+  try {
+    // optionally ping your DB here
+    res.status(200).json({ status: 'ok' });
+  } catch (e) {
+    res.status(503).json({ status: 'degraded' });
+  }
+});
 
 // Start HTTP FIRST so Render sees an open port
 const server = app.listen(PORT, '0.0.0.0', () => {
