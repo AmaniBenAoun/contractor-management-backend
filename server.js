@@ -34,7 +34,7 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 app.use('/api', require('./routes/routes'));
 
 // Connect to DB (don’t exit if it fails; just log)
-(async () => {
+/*(async () => {
   try {
     // Optional: log what we’re connecting to
     const u = new URL(process.env.DATABASE_URL);
@@ -44,4 +44,4 @@ app.use('/api', require('./routes/routes'));
   } catch (err) {
     console.error('DB connection failed:', err);
   }
-})();
+})();*/
